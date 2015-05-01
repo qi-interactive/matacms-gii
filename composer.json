@@ -1,0 +1,23 @@
+{
+    "name": "matacms/matacms-gii",
+    "description": "MATA CMS gii",
+    "keywords": ["mata", "framework", "mata cms", "gii"],
+    "homepage": "http://www.qi-interactive.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-gii": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+   "autoload": {
+        "psr-4": {
+            "matacms\\gii\\": ""
+        }
+    }
+}
