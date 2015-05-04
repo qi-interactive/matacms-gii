@@ -42,6 +42,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return '<?= $generator->generateTableName($tableName) ?>';
     }
+
+    <?php if($generator->resetBehaviors == true): ?>
+
+    public function behaviors() {
+        return [
+     
+        ];
+    }
+
+    <?php endif; ?>
 <?php if ($generator->db !== 'db'): ?>
 
     /**

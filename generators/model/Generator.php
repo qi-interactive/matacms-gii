@@ -27,8 +27,11 @@ class Generator extends \yii\gii\Generator
     public $ns = 'matacms\models';
     public $tableName;
     public $modelClass;
+    public $useTablePrefix = false;
+    public $generateLabelsFromComments = false;
     public $baseClass = '\matacms\db\ActiveRecord';
     public $useSchemaName = true;
+    public $resetBehaviors = true;
 
     /**
      * @inheritdoc
@@ -60,7 +63,7 @@ class Generator extends \yii\gii\Generator
             [['ns', 'baseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['tableName'], 'match', 'pattern' => '/^(\w+\.)?([\w\*]+)$/', 'message' => 'Only word characters, and optionally an asterisk and/or a dot are allowed.'],
             [['db'], 'validateDb'],
-            [['ns', 'queryNs'], 'validateNamespace'],
+            [['ns'], 'validateNamespace'],
             [['tableName'], 'validateTableName'],
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
@@ -361,7 +364,7 @@ class Generator extends \yii\gii\Generator
      * @param boolean $useSchemaName should schema name be included in the class name, if present
      * @return string the generated class name
      */
-    protected function generateClassName($tableName, $useSchemaName = null)
+    public function generateClassName($tableName, $useSchemaName = null)
     {
         if (isset($this->classNames[$tableName])) {
             return $this->classNames[$tableName];
@@ -421,5 +424,41 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * Saves the generated code into files.
+     * @param CodeFile[] $files the code files to be saved
+     * @param array $answers
+     * @param string $results this parameter receives a value from this method indicating the log messages
+     * generated while saving the code files.
+     * @return boolean whether files are successfully saved without any error.
+     */
+    public function save($files, $answers, &$results)
+    {
+        $errors = [];
+        $hasError = false;
+        foreach ($files as $file) {
+            if(file_exists($file->path)) {
+                $hasError = true;
+                $errors[] = "$file->path already exists";
+                continue;
+            }
+
+            $relativePath = $file->getRelativePath();
+            if (isset($answers[$file->id]) && $file->operation !== CodeFile::OP_SKIP) {
+                $error = $file->save();
+                if (is_string($error)) {
+                    $hasError = true;
+                    $errors[] = $error;
+                }
+            } else {
+                $errors[] = "Skipped $relativePath";
+            }
+        }
+
+        $results = implode("\n", $errors);
+
+        return !$hasError;
     }
 }
