@@ -1,8 +1,9 @@
 <?php
+
 /**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
  */
 
 namespace matacms\gii\generators\model;
@@ -15,12 +16,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
 
-/**
- * This generator will generate one or multiple ActiveRecord classes for the specified database table.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
+
 class Generator extends \yii\gii\Generator
 {
     public $db = 'db';
@@ -33,31 +29,21 @@ class Generator extends \yii\gii\Generator
     public $useSchemaName = true;
     public $resetBehaviors = true;
 
-    /**
-     * @inheritdoc
-     */
     public function getName()
     {
         return 'Model Generator';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription()
     {
         return 'This generator generates an ActiveRecord class for the specified database table.';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass'], 'filter', 'filter' => 'trim'],
             [['ns'], 'filter', 'filter' => function($value) { return trim($value, '\\'); }],
-
             [['db', 'ns', 'tableName', 'baseClass'], 'required'],
             [['db', 'modelClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
             [['ns', 'baseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -70,9 +56,6 @@ class Generator extends \yii\gii\Generator
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
@@ -84,26 +67,16 @@ class Generator extends \yii\gii\Generator
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function requiredTemplates()
     {
-        // @todo make 'query.php' to be required before 2.1 release
-        return ['model.php'/*, 'query.php'*/];
+        return ['model.php'];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function stickyAttributes()
     {
         return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass']);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function generate()
     {
         $files = [];
@@ -461,4 +434,5 @@ class Generator extends \yii\gii\Generator
 
         return !$hasError;
     }
+    
 }
