@@ -135,10 +135,15 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
+        $searchColumns = [];
+
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
+
+            $searchColumns[] = $column->name;
+
             if (!$column->allowNull && $column->defaultValue === null) {
                 $types['required'][] = $column->name;
             }
@@ -176,6 +181,8 @@ class Generator extends \yii\gii\Generator
                         $types['url'][] = $column->name;
                     }
             }
+
+
         }
         $rules = [];
         foreach ($types as $type => $columns) {
@@ -207,6 +214,8 @@ class Generator extends \yii\gii\Generator
         } catch (NotSupportedException $e) {
             // doesn't support unique indexes information...do nothing
         }
+
+        $rules[] = "[['" . implode("', '", $searchColumns) . "'], 'safe', 'on' => self::SCENARIO_FORM_SEARCH]";
 
         return $rules;
     }

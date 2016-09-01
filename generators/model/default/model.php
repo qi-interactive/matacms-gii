@@ -41,6 +41,7 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+    const SCENARIO_FORM_SEARCH = 'SCENARIO_FORM_SEARCH';
     /**
      * @inheritdoc
      */
