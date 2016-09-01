@@ -179,10 +179,10 @@ class Generator extends \yii\gii\Generator
         }
         $rules = [];
         foreach ($types as $type => $columns) {
-            $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+            $rules[] = "[['" . implode("', '", $columns) . "'], '$type', 'on' => self::SCENARIO_DEFAULT]";
         }
         foreach ($lengths as $length => $columns) {
-            $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
+            $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length, 'on' => self::SCENARIO_DEFAULT]";
         }
 
         // Unique indexes rules
@@ -195,12 +195,12 @@ class Generator extends \yii\gii\Generator
                     $attributesCount = count($uniqueColumns);
 
                     if ($attributesCount == 1) {
-                        $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
+                        $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique', 'on' => self::SCENARIO_DEFAULT]";
                     } elseif ($attributesCount > 1) {
                         $labels = array_intersect_key($this->generateLabels($table), array_flip($uniqueColumns));
                         $lastLabel = array_pop($labels);
                         $columnsList = implode("', '", $uniqueColumns);
-                        $rules[] = "[['" . $columnsList . "'], 'unique', 'targetAttribute' => ['" . $columnsList . "'], 'message' => 'The combination of " . implode(', ', $labels) . " and " . $lastLabel . " has already been taken.']";
+                        $rules[] = "[['" . $columnsList . "'], 'unique', 'targetAttribute' => ['" . $columnsList . "'], 'message' => 'The combination of " . implode(', ', $labels) . " and " . $lastLabel . " has already been taken.', 'on' => self::SCENARIO_DEFAULT]";
                     }
                 }
             }
@@ -434,5 +434,5 @@ class Generator extends \yii\gii\Generator
 
         return !$hasError;
     }
-    
+
 }

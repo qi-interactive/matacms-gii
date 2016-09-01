@@ -53,7 +53,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
     public function behaviors() {
         return [
-     
+
         ];
     }
 
@@ -88,4 +88,17 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endforeach; ?>
         ];
     }
+
+    /*
+    public function getLabel()
+    {
+        return $this->YourAttribute;
+    }
+    */
+
+    /*
+    public function filterableAttributes() {
+        return ["Your filterable attributes"];
+    }
+    */
 }

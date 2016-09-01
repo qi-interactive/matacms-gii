@@ -10,7 +10,7 @@ Gii application has model generator for MATA CMS.
 Installation
 ------------
 
-- Add the module using composer: 
+- Add the module using composer:
 
 ```json
 "matacms/matacms-gii": "~1.0.0"
@@ -18,6 +18,10 @@ Installation
 
 Changelog
 ---------
+
+## 1.0.0.1-alpha, September 1, 2016
+
+- Updates.
 
 ## 1.0.0-alpha, May 18, 2015
 
