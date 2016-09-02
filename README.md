@@ -19,6 +19,10 @@ Installation
 Changelog
 ---------
 
+## 1.0.0.2-alpha, September 2, 2016
+
+- Updates.
+
 ## 1.0.0.1-alpha, September 1, 2016
 
 - Updates.

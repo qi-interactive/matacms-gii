@@ -90,6 +90,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         ];
     }
 
+    public function getEventDate()
+    {
+        return $this->DateCreated;
+    }
+
     /*
     public function getLabel()
     {
